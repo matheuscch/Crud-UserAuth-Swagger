@@ -1,5 +1,4 @@
 import { getCustomRepository } from "typeorm"
-import { UserRepositories } from "../repositories/UsersRepositories"
 import { VisitsRepositories } from "../repositories/VisitsRepositories"
 
 class ListUserVisitsService {

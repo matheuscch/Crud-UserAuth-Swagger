@@ -1,6 +1,5 @@
 import { getCustomRepository } from "typeorm"
 import { LeadsRepositories } from "../repositories/LeadsRepositories"
-import { UserRepositories } from "../repositories/UsersRepositories"
 
 interface ILeadRequest {
     email: string,    

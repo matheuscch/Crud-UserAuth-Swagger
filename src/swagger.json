@@ -1,7 +1,7 @@
 {
 "openapi":"3.0.0",
 "info":{
-    "title":"UserAuth by @matheuscch",
+    "title":"UserAuth + CRUD operations Swagger by @matheuscch",
     "description":"This is just a set-up with swagger showing auth routes",
     "termsOfService":"http://localhost:3000/terms",
     "contact":{
@@ -62,7 +62,7 @@
     "/login":{
         "post": {
             "summary": "Authenticate User",
-            "description":"this route authenticate your user. You should copy the token in response and add in authentication button",
+            "description":"this route authenticate your user. You should copy the token in response and add in authentication button, paste WITHOUT QUOTATION MARKS!",
             "tags": ["Users"],
            
             "requestBody":{
@@ -90,35 +90,209 @@
                     "description": "OK",
                     "content": {
                         "application/json":{
-                            "example":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNvbWV2YWxpZEBkb21haW4uY29tIiwiaWF0IjoxNjQ5ODc0NTA0LCJleHAiOjE2NDk5NjA5MDQsInN1YiI6IjZhYjkwZmMyLWZjMDYtNGM2Mi1hNmMxLWUwYjU2MzYyMDNhNiJ9.VqFA-DYfv5G-3V8QMO1M3Cf0YVfpV_P64HlOf98A95s"
+                            "example":"your request body should look like eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNvbWV2YWxpZEBkb21haW4uY29tIiwiaWF0IjoxNjQ5ODc0NTA0LCJleHAiOjE2NDk5NjA5MDQsInN1YiI6IjZhYjkwZmMyLWZjMDYtNGM2Mi1hNmMxLWUwYjU2MzYyMDNhNiJ9.VqFA-DYfv5G-3V8QMO1M3Cf0YVfpV_P64HlOf98A95s <- you should click authorize button and paste the token WITHOUT QUOTATION MARKS"
                         
                         }
                     }
                 }    
             }
         }
-    }      
-},
-"components": {
-    "schemas": {
-        "User":{
-            "type":"object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },  
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "admin": {
-                    "type": "boolean"
+    },    
+    "/lead":{
+        "post": {
+            "summary": "Create Lead register",
+            "description":"This route create a register bounded a logged user",
+            "tags": ["Leads"],
+            "security": [{"bearerAuth":[]}],
+            "requestBody":{
+                "content": {
+                    "application/json":{
+                        "schema":{
+                            "$ref":"#/components/schemas/Lead"
+                        },
+                        "examples": {
+                            "login":{
+                                "value":{
+                                    "name":"NameOfLead",
+                                    "email":"somevalid@domain.com",
+                                    "is_closed":false
+                                }
+                            }
+                        }
+                    }
                 }
+            },
+            "responses": {
+                "400":{
+                    "description": "Invalid Email or Password"
+                },
+                    "200":{
+                    "description": "OK",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "$ref":"#/components/schemas/Lead"
+                            }
+                        
+                        }
+                    }
+                }    
+            }
+        }
+    },
+    "/user/leads":{
+        "get": {
+            "summary": "List all leads cadastred by logged user",
+            "description":"This route shows all leads cadastred by the logged user",
+            "tags": ["Leads"],
+            "security": [{"bearerAuth":[]}],
+            "responses": {
+                "400":{
+                    "description": "Invalid Email or Password"
+                },
+                    "200":{
+                    "description": "OK",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "$ref":"#/components/schemas/Lead"
+                            }
+                        
+                        }
+                    }
+                }    
+            }
+        }
+    },
+    "/lead/update":{
+        "put": {
+            "summary": "Update Lead register by Id",
+            "description":"This route update a lead by id",
+            "tags": ["Leads"],
+            "security": [{"bearerAuth":[]}],
+            "requestBody":{
+                "content": {
+                    "application/json":{
+                        "schema":{
+                            "$ref":"#/components/schemas/Lead"
+                        },
+                        "examples": {
+                            "login":{
+                                "value":{
+                                    "id":"c60aa801-b83d-4096-b51c-4267220fcde4",
+                                    "name":"NameOfLead",
+                                    "email":"somevalid@domain.com",
+                                    "is_closed":true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "400":{
+                    "description": "Invalid Email or Password"
+                },
+                    "200":{
+                    "description": "OK",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "$ref":"#/components/schemas/Lead"
+                            }
+                        
+                        }
+                    }
+                }    
+            }
+        }
+    }, 
+        "/lead/delete":{
+            "delete": {
+                "summary": "Update Lead register by Id",
+                "description":"This route update a lead by id",
+                "tags": ["Leads"],
+                "security": [{"bearerAuth":[]}],
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/Lead"
+                            },
+                            "examples": {
+                                "login":{
+                                    "value":{
+                                        "id":"c60aa801-b83d-4096-b51c-4267220fcde4"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400":{
+                        "description": "Invalid Email or Password"
+                    },
+                        "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/Lead"
+                                }
+                            
+                            }
+                        }
+                    }    
+                }
+            }
+    }
+    },
+    "components": {
+        "schemas": {
+            "User":{
+                "type":"object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },  
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "admin": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Lead":{
+                "type":"object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },  
+                    "email": {
+                        "type": "string"
+                    },
+                    "is_closed": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth":{
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         }
     }
-}
 
 }
