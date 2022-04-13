@@ -1,41 +1,40 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class AddUserVisit1647042350116 implements MigrationInterface {
+export class CreateLeads1649776218372 implements MigrationInterface {
+
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name:"visits",
+                name:"leads",
                 columns:[
                     {
                         name:"id",
                         type:"uuid",
                         isPrimary:true,
                     },
-                    {
-                        name:"user_id",
-                        type:"uuid",
-
-                    },
                     {   name:"name",
                         type:"varchar"
 
-                    },           
-                    {
-                        name:"isValid",
-                        type:"boolean"
                     },
                     {
-                        name:"created_at",
-                        type:"timestamp",
-                        default:"now()"
+                        name:"email",
+                        type:"varchar"
+                    },
+                    {
+                        name: "is_closed",
+                        type:"boolean",
+                        default:false
+                    },
+                    {
+                        name:"user_id",
+                        type:"uuid"
                     },
                     {
                         name:"updated_at",
                         type:"timestamp",
                         default:"now()"
                     }                
-                ],
-                foreignKeys: [
+                ], foreignKeys: [
                     {
                       name: "providerUser",
                       referencedTableName: "users",
@@ -48,8 +47,9 @@ export class AddUserVisit1647042350116 implements MigrationInterface {
             })
         )
     }
+
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("visits");
+        await queryRunner.dropTable("leads");
     }
 
 }
